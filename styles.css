@@ -1,0 +1,853 @@
+*,
+*:before, *:after {
+    box-sizing: border-box;
+}
+
+html,
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+html {
+    font-size: 100%;
+}
+
+body{
+    font: normal 1rem/1.4 Helvetica Neue, sans-serif;
+}
+
+.main{
+    width:100%;
+    height: 100%;
+    perspective: 600px;
+    transition: all 0.2s ease;
+}
+
+.section {
+    display: block;
+    height: 100%;
+    display: flex;
+}
+
+.section:nth-of-type(1){ background: #651FFF; color: white; }
+.section:nth-of-type(2){ background: #ff1744; }
+.section:nth-of-type(3){ background: #FF6D00; }
+
+
+.content {
+    width: 100%;
+    padding: 1rem;
+    height: 100%;
+
+
+}
+
+@media all and (min-width: 768px){
+    .content{
+        padding: 6rem;
+    }
+}
+/* 
+    /*
+    LAyout.
+
+    flex helpers to display content
+*/
+
+.o-layout{
+    position: relative;
+    display: flex;
+}
+
+.o-layout--vertical { flex-direction: column; }
+.o-layout--wrap     { flex-wrap: wrap; }
+
+.o-layout--between  { justify-content: space-between; }
+.o-layout--center   { justify-content: center; }
+.o-layout--around   { justify-content: space-around; }
+.o-layout--end      { justify-content: flex-end }
+
+.o-layout--baseline { align-items: baseline;}
+.o-layout--top      { align-items: flex-start; }
+.o-layout--bottom   { align-items: flex-end; }
+.o-layout--middle   { align-items: center; }
+
+.o-layout__expander   { flex: 1; }
+
+[data-layout]{
+    position: relative;
+    display: flex;
+}
+
+/*contains keyowords*/
+[data-layout*="vertical"] { flex-direction: column; }
+[data-layout*="wrap"]     { flex-wrap: wrap; }
+
+[data-layout*="between"]  { justify-content: space-between; }
+[data-layout*="center"]   { justify-content: center; }
+[data-layout*="around"]   { justify-content: space-around; }
+[data-layout*="end"]      { justify-content: flex-end }
+
+[data-layout*="baseline"] { align-items: baseline;}
+[data-layout*="top"]      { align-items: flex-start; }
+[data-layout*="bottom"]   { align-items: flex-end; }
+[data-layout*="middle"]   { align-items: center; }
+
+
+/* center 1*/
+/*.section{
+    width: 100%;
+    display: table;
+    padding: 56px 0;
+}
+
+.content {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+*/
+/* center 2, aconselho para alinhar icons não conteudo, overflow */
+
+/*.section {
+    display: block;
+    position: relative;
+}   
+
+.content {
+    background: red;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}*/
+
+.section__footer {
+    position: absolute;
+    bottom: 0;
+    left:0;
+    width: 100%;
+}
+
+/*
+    Component 1
+
+    position fixed,
+    explain label for attribute and it's power
+    siblings selectors
+    transitions.
+    backdrop enhancements
+    responsive
+
+
+*/
+
+
+.header-bar {
+    position: fixed;
+    top:0;
+    width: 100%;
+    background: #101010;
+    color: white;
+    height: 56px;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.12);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    padding: 0 8px;
+    justify-content: space-between;
+}
+
+.header-bar__block {
+    display: flex;
+    align-items: center;
+}
+
+.header-bar__heading {
+    background: #2645ff;
+    color: white;
+    margin: 0;
+}
+
+/*sidebar*/
+.nav {
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 110;
+}
+.nav__body {
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100vh;
+    width: 304px;
+    background: white;
+
+    opacity: 0;
+    transform: translateX(-100%);
+
+    transition-property: all;
+    transition-timing-function: ease;
+    transition-duration: 0.2s;
+    transform-origin: top left;
+}
+
+.nav__header {
+    background: #f4f4f4;
+    padding: 16px;
+}
+
+.nav__list {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.nav__link {
+    display: block;
+    padding: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+
+/*
+    fazer display none e block primeiro
+    explicar tecnica
+*/
+.overlay{
+    position: fixed;
+    display: block;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s 0s ease, visibility 0.2s 0.2s ease;
+    z-index: 0;
+
+}
+
+.overlay--inner{
+    position: absolute;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* 
+    NAV-CONTROLLER
+    The checkbox that acts like trigger
+
+    Notes: make it position fixed, to move along with scroll
+    otherwise it will focus on label click making it scroll
+    to it's position
+*/
+
+.nav-controller {
+    position: fixed;
+    opacity: 0;
+}
+
+.nav-controller:checked ~ .nav .overlay {
+    transition-delay: 0s;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.nav-controller:checked ~ .nav .nav__body{
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.nav-controller:checked ~ .main{
+    transform-origin: top right;
+     transform: translateX(304px);
+}
+
+
+
+/*
+    BUTTTTTTTTOOOOOOONSSSSS
+    -----
+*/
+
+.button{
+    -webkit-appearance: none;
+    border: none;
+    box-shadow: 0;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    color:inherit;
+    
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+
+.button--icon-container {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    padding:0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.button--icon-container:before {
+    content: " ";
+    position: absolute;
+    top:0;
+    left:0;
+    background: rgba(0,0,0,0.12);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: all 0.2s;
+    transform: scale(0);
+}
+
+.button--icon-container:focus:before {
+    transform: scale(1.2);
+
+}
+
+
+.button--fab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.24);
+    transition: all 0.15s;
+}
+
+.button--fab:hover {
+     box-shadow: 0px 8px 24px rgba(0,0,0,0.24);
+}
+
+/* make it small if on drodpown menu*/
+.c-dropdown__menu .button--fab{
+    width: 48px;
+    height: 48px;
+}
+
+/* flavourssss*/
+
+.button--bordered {
+    border: 2px solid;
+    border-riadius: 3px;
+    padding: 0.5rem 0.75rem;
+}
+
+.c-dropdown-trigger:checked ~ .button--bordered,
+.button--bordered:hover{
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.button--gym {
+
+    min-width: 220px
+}
+
+.button--success {
+    background: #69F0AE;
+    color: black;
+}
+
+.button--danger {
+    background: #FF3D00;
+    color: white;
+}
+
+.button--warning {
+    background: #FFAB00;
+    color: #333;
+}
+
+.button--default {
+    background: #304FFE;
+    color: white;
+} 
+
+.button--punk {
+    background: #F50057;
+    color: white;
+} 
+
+.button--jek {
+    background: #6BCEEC;
+    color: white;
+} 
+
+
+
+
+/*
+    ICONS
+    -----
+*/
+
+.icon {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.icon--hamburger{
+    margin: 2px;
+}
+.icon--hamburger,
+.icon--hamburger:before,
+.icon--hamburger:after{
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    transition: all 0.2s;
+}
+
+.icon--hamburger:before,
+.icon--hamburger:after{
+    content: " ";
+    position: absolute;
+    left: 0;
+    display: block;
+}
+
+.icon--hamburger:before{
+    top: -5px;
+}
+
+.icon--hamburger:after{
+    top: 5px;
+}
+
+.icon-trigger:checked + .icon--hamburger,
+.icon-trigger:checked ~ .button > .icon--hamburger,
+.button--icon-container:focus .icon--hamburger{
+    background: transparent;
+}
+
+.icon-trigger:checked ~ .icon--hamburger:before,
+.icon-trigger:checked ~ .button > .icon--hamburger:before,
+.button--icon-container:focus .icon--hamburger:before{
+    top:0;
+    transform: rotate(-45deg);
+}
+
+.icon-trigger:checked ~ .icon--hamburger:after,
+.icon-trigger:checked ~ .button > .icon--hamburger:after,
+.button--icon-container:focus .icon--hamburger:after{
+    top:0;
+    transform: rotate(45deg);
+}
+
+/*
+    LIST
+    -----
+*/
+.list {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list--inline {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+     justify-content: center;
+   
+}
+
+.list__link {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 8px;
+    font-size: 12px;
+}
+
+
+/*
+    DROPDOWN
+    -----------------------
+*/
+.c-dropdown{
+    position: relative;
+    display: inline-block;
+    z-index: 1000;
+}
+
+.c-dropdown__fake-trigger{
+    position: relative;
+    z-index: 2; /* over the menu */
+    cursor: pointer;
+}
+
+.c-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #101010;
+    color: white;
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    min-width: 220px;
+    min-height: 220px;
+    z-index: 1;
+
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+
+    transition: 
+        visibility 0.2s 0.6s,
+        opacity 0.2s 0.6s,
+        transform 0.2s 0.6s; /* 0.6s delay.. only hide after all items hidden, more items = more delay*/
+
+}
+
+/* 
+    POSITIONING 
+    left, by default
+*/
+
+.c-dropdown__menu--right {
+    left: auto;
+    right: 0;
+    text-align: right;
+    transform-origin: top right;
+}
+
+
+.c-dropdown__menu--top {
+    top: auto;
+    bottom: 100%;
+    text-align: center;
+    transform-origin: bottom center;
+}
+
+
+.c-dropdown__menu--naked {
+    min-width: 0;
+    min-height: 0;
+    background: none;
+    width: 100%;
+}
+
+
+.c-dropdown__menu-item{
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.c-dropdown__menu-link {
+    display: block;
+    padding: 16px;
+}
+
+
+.c-dropdown__menu-item:nth-child(1){ transition-delay: 0.5s;}
+.c-dropdown__menu-item:nth-child(2){ transition-delay: 0.4s;}
+.c-dropdown__menu-item:nth-child(3){ transition-delay: 0.3s;}
+.c-dropdown__menu-item:nth-child(4){ transition-delay: 0.2s;}
+
+
+/* 
+    modifiers
+    ---------
+*/
+
+/*if fab*/
+.c-dropdown__menu--right .c-dropdown__menu-item {
+    transform: translateX(20px); /* offset by 20px to right*/
+}
+
+
+/*if fab*/
+.c-dropdown--fab .c-dropdown__menu-item {
+    opacity: 1;
+    transition: transform 0.4s cubic-bezier(.87,-.41,.19,1.44) ; /*elastic transition*/
+    padding-top: 16px;
+}
+
+/* fab menu, hide items behind trigger on start */
+.c-dropdown--fab .c-dropdown__menu-item:nth-child(1){ transition-delay: 0.5s; transform: translateY(400%); }
+.c-dropdown--fab .c-dropdown__menu-item:nth-child(2){ transition-delay: 0.4s; transform: translateY(300%); }
+.c-dropdown--fab .c-dropdown__menu-item:nth-child(3){ transition-delay: 0.3s; transform: translateY(200%); }
+.c-dropdown--fab .c-dropdown__menu-item:nth-child(4){ transition-delay: 0.2s; transform: translateY(100%); }
+
+
+
+
+
+
+
+/*
+    DROPDOWN Interaction
+*/
+
+
+/*show menu on hover and click*/
+.c-dropdown-trigger:checked ~ .c-dropdown__menu,
+.c-dropdown:hover .c-dropdown__menu {
+    transition-delay: 0s;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
+}
+.c-dropdown:hover .c-dropdown__menu-item:nth-child(1){ transition-delay: 0.2s }
+.c-dropdown:hover .c-dropdown__menu-item:nth-child(2){ transition-delay: 0.3s }
+.c-dropdown:hover .c-dropdown__menu-item:nth-child(3){ transition-delay: 0.4s }
+.c-dropdown:hover .c-dropdown__menu-item:nth-child(4){ transition-delay: 0.5s }
+
+.c-dropdown:hover .c-dropdown__menu .c-dropdown__menu-item,
+.c-dropdown-trigger:checked ~ .c-dropdown__menu .c-dropdown__menu-item {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+} 
+
+.c-dropdown-trigger:checked ~ .overlay {
+    transition-delay: 0s;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+
+
+
+
+
+/*
+    HELPERS UTILITIES
+    -----------------------
+*/
+.u-visibillityhidden{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+.u-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+
+/* */
+.c-fab{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+}
+
+
+/* modal */
+
+.c-modal {
+    position: fixed;
+    top:0;
+    left:0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2000;
+    transition: visibility 0.2s linear, opacity 0.4s linear;
+    transition-delay: 1s;
+
+}
+
+.c-modal:target,
+.c-modal:target .overlay{
+    transition-delay: 0s;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* não sei explicar */
+.c-modal:not(:target),
+.c-modal:not(:target) .overlay{
+    transition-delay: 1s;
+}
+
+    .c-modal__body {
+        position: relative;
+        z-index: 10;
+        padding: 1rem;
+        background: white;
+        width: 600px;
+        max-width: 100%;
+        text-align: center;
+        
+    }
+
+    .c-modal .c-modal__body{
+        opacity: 0;
+        transition: opacity 0.2s 0.8s linear;
+        animation-duration: 0.9s;
+        animation-name: tada;
+    }
+
+    .c-modal:target .c-modal__body{
+        opacity: 1;
+        transition-delay: 0s;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-name: newspaper;
+    }
+
+
+@keyframes newspaper {
+  0% {
+    transform: scale(0) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes tada{
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+
+      10%, 20% {
+            transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+      }
+
+      30%, 50%, 70%, 90% {
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+      }
+
+      40%, 60%, 80% {
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+      }
+
+      100% {
+            transform: scale3d(1, 1, 1);
+      }
+}
+
+
+.c-slider {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: white;
+    box-shadow: 0px 8px 32px rgba(0,0,0,0.34);
+}
+
+.c-slide {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+}
+
+.c-slide:before {
+/*    content: " ";
+    display: block;
+    position: absolute;
+    background-image: inherit;
+    mix-blend-mode: difference;
+     background-position: center center;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    background-blend-mode: darken;
+    background-size: cover;
+    top: 0;
+    /* opacity: 0; */
+    mix-blend-mode: exclusion;*/
+}
+
+.c-slide figure,
+.c-slide img {
+    position: relative;
+    height: 100%;
+    width: auto;
+    margin: 0 auto;
+}
+
+.bg-blend-difference-blue {
+    background-color: blue;
+    background-blend-mode: difference;
+}
+
+.blend-multiply-blue{
+    color: blue;
+    mix-blend-mode: multiply;
+}
+
+.mix-blend-difference {
+    mix-blend-mode: difference;
+}
+
+.u-alpha{
+    font-size: 64px;
+    color: white;
+    letter-spacing: -0.025em;
+    position: relative;
+    z-index: 10;
+    margin: 0;
+}
+
+.blend-multiply-blue
+
+.CENS {
+
+}

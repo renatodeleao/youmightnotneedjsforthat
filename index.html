@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>You might not need JavaScript for that</title>
+
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <input type="checkbox" id="nav-trigger" class="nav-controller" />
+    <header class="header-bar">
+        <label class="" for="nav-trigger"  tabindex="-1">
+            <div class="button--icon-container">
+                <span class="icon icon--hamburger"></span>
+            </div>
+        </label>
+        <h2 class="header-bar__heading">#CSSFTW</h2>
+        <div class="header-bar__block">
+            <!-- the dropdown-->
+            <div class="c-dropdown">
+                <input type="checkbox" id="drop-trigger" class="c-dropdown-trigger u-visibillityhidden">
+                <label class="c-dropdown__fake-trigger button button--bordered" for="drop-trigger">
+                    dropdown
+                </label>
+
+                <ul class="c-dropdown__menu c-dropdown__menu--right">
+                    <li class="c-dropdown__menu-item">
+                        <a class="c-dropdown__menu-link">dfagfg</a>
+                    </li>
+                     <li class="c-dropdown__menu-item">
+                        <a class="c-dropdown__menu-link">asdadsd</a>
+                    </li>
+                    <li class="c-dropdown__menu-item">
+                        <a class="c-dropdown__menu-link">asdadsd</a>
+                    </li>
+                    <li class="c-dropdown__menu-item">
+                        <a class="c-dropdown__menu-link">asdadsd</a>
+                    </li>
+                </ul>
+
+                <label class="overlay" for="drop-trigger"></label>
+            </div>
+            <!-- end the dropdown-->
+
+        </div>
+    </header>
+    
+    <!--sidebar-->
+    <aside class="nav">
+        <label class="overlay" for="nav-trigger"></label>  
+        <div class="nav__body">
+            <div class="nav__header">
+                 <h2>For off-canvas menus & sidebars</h2>
+            </div>
+
+            <ul class="nav__list">
+                <label class="nav__item" for="nav-trigger">
+                    <a class="nav__link" href="#menu">Menu Item</a>
+                </label>
+            </ul>
+        </div>
+    </aside>
+    
+    <!--fab-->
+    <div class="c-fab">
+         <!-- the dropdown-->
+        <div class="c-dropdown c-dropdown--fab">
+            <input type="checkbox" id="drop-trigger-2" class="c-dropdown-trigger icon-trigger u-visibillityhidden">
+            <label class="c-dropdown__fake-trigger button button--fab button--jek" for="drop-trigger-2">
+                <span class="icon icon--hamburger"></span>
+            </label>
+
+            <ul class="c-dropdown__menu c-dropdown__menu--top c-dropdown__menu--naked">
+                <li class="c-dropdown__menu-item">
+                    <a class="button button--punk button--fab" role="button">1</a>
+                </li>
+                <li class="c-dropdown__menu-item">
+                    <a class="button button--warning button--fab" role="button">2</a>
+                </li>
+                <li class="c-dropdown__menu-item">
+                    <a class="button button--danger button--fab" role="button">3</a>
+                </li>
+                <li class="c-dropdown__menu-item">
+                    <a class="button button--default button--fab" role="button">4</a>
+                </li>
+                
+            </ul>
+
+            <label class="overlay" for="drop-trigger-2"></label>
+        </div>
+        <!-- end the dropdown-->
+    </div>
+
+
+    <main role="main" class="main">
+        <section class="section" id="button" data-layout="center middle">
+            <div class="content" data-layout="vertical center middle">
+                <h1>You might not need JavaScript for that<sup>*</sup></h1>
+                <small>* But you definitely should enhance with it.</small>
+                <br/>
+                <br/>
+                <div>
+                    <a href="#modal-example" role="button" class="button button--gym button--punk">what?</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="photo-gallery">
+            <div class="content">
+                <div class="c-slider">
+                    <input class="" type="radio" name="c-slider-state-control" id="one" checked />
+                    <input class="" type="radio" name="c-slider-state-control" id="two" />
+
+
+                    <div class="c-slider__arrows">
+                        <label for="one" class="c-slider__arrow"></label>
+                        <label for="two" class="c-slider__arrow"></label>
+                    </div>
+
+                    <div class="c-slider__indicators">
+                        <label for="one" class="c-slider__indicator"></label>
+                        <label for="two" class="c-slider__indicator"></label>
+                    </div>
+
+                    <!--slides-->
+                    <div class="c-slides">
+                        <div id="one" class="c-slide bg-blend-difference-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                            <h2 class="u-alpha mix-blend-difference">Whitesmith</h2>
+                        </div>
+
+
+                         <div id="two" class="c-slide bg-blend-difference-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                            <h2 class="u-alpha mix-blend-difference">Whitesmith 2</h2>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+
+
+
+
+
+    <!--put modals always on bottom before body and scripts-->
+    <div class="c-modal" id="modal-example">
+        <!--last-->
+        <a role="button" href="#body" class="overlay"></a>
+        <div class="c-modal__body">
+            <h2>Is this real life?</h2>
+            <a role="button" href="#close" class="button button--punk">Close it</a>
+        </div>
+    </div>
+</body>
+</html>
