@@ -95,6 +95,7 @@
 
 
     <main role="main" class="main">
+
         <section class="section" id="button" data-layout="center middle">
             <div class="content" data-layout="vertical center middle">
                 <h1>You might not need JavaScript for that<sup>*</sup></h1>
@@ -110,37 +111,68 @@
         <section class="section" id="photo-gallery">
             <div class="content">
                 <div class="c-slider">
-                    <input class="" type="radio" name="c-slider-state-control" id="one" checked />
-                    <input class="" type="radio" name="c-slider-state-control" id="two" />
+                    <!--controllers-->
+                    <input class="c-slider-state-control" type="radio" name="c-slider-state-control" id="one" checked />
+                    <input class="c-slider-state-control" type="radio" name="c-slider-state-control" id="two" />
+                    <input class="c-slider-state-control" type="radio" name="c-slider-state-control" id="three" />
+                    <input class="c-slider-state-control" type="radio" name="c-slider-state-control" id="four" />
 
 
-                    <div class="c-slider__arrows">
-                        <label for="one" class="c-slider__arrow"></label>
-                        <label for="two" class="c-slider__arrow"></label>
-                    </div>
-
+                     <!--dot slides-->
                     <div class="c-slider__indicators">
                         <label for="one" class="c-slider__indicator"></label>
                         <label for="two" class="c-slider__indicator"></label>
+                        <label for="three" class="c-slider__indicator"></label>
+                        <label for="four" class="c-slider__indicator"></label>
                     </div>
 
                     <!--slides-->
-                    <div class="c-slides">
-                        <div id="one" class="c-slide bg-blend-difference-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
-                            <h2 class="u-alpha mix-blend-difference">Whitesmith</h2>
-                        </div>
+                    <div class="c-slides-wrapper">
+                        <div class="c-slides-taxi">
+                            <div class="c-slide bg-blend-difference-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                                <h2 class="u-alpha mix-blend-difference">Whitesmith</h2>
+                            </div>
 
 
-                         <div id="two" class="c-slide bg-blend-difference-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
-                            <h2 class="u-alpha mix-blend-difference">Whitesmith 2</h2>
+                             <div class="c-slide bg-blend-screen-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                                <h2 class="u-alpha">Whitesmith 2</h2>
+                            </div>
+
+                            <div class="c-slide bg-blend-multiply-blue" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                                <h2 class="u-alpha mix-blend-difference">Whitesmith 3</h2>
+                            </div>
+                            <div class="c-slide bg-bw" style="background-image: url('./ws.jpg')" data-layout="bottom end">
+                                <h2 class="u-alpha mix-blend-difference">Whitesmith 3</h2>
+                            </div>
                         </div>
                     </div>
+
+                    <!--arrows-->
+                    <div class="c-slider__arrows">
+                        <label for="one" class="c-slider__arrow button button--fab button--jek"></label>
+                        <label for="two" class="c-slider__arrow button button--fab button--jek"></label>
+                        <label for="three" class="c-slider__arrow button button--fab button--jek"></label>
+                        <label for="four" class="c-slider__arrow button button--fab button--jek"></label>
+                    </div>
+                    
 
 
 
 
                 </div>
             </div>
+        </section>
+        
+        <!-- teach flexbox -->
+        <section class="section">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
         </section>
 
     </main>
