@@ -10,6 +10,7 @@ Making interactive components, only with css
 
 - [Flex Cheat Sheet](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), by **CSS-tricks**
 
+- [Flex bugs](https://github.com/philipwalton/flexbugs), a repo of most common bugs and workarounds
 
 ### The inspiration for this workshop
 [Radio Controlled Web](http://alistapart.com/article/radio-controlled-web-design), by **A List Apart**
